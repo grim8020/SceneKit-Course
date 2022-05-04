@@ -6,37 +6,32 @@ import PlaygroundSupport
 let sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
 let scene = SCNScene()
 
-sceneView.scene = scene
-sceneView.backgroundColor = UIColor.lightGray
 sceneView.autoenablesDefaultLighting = true
+//sceneView.allowsCameraControl = true
+sceneView.scene = scene
+sceneView.backgroundColor = UIColor.gray
 
 PlaygroundPage.current.setLiveView(sceneView)
 
 
-//SCNPyramid
-
-
-
-
+let cameraNode = SCNNode()
+cameraNode.camera = SCNCamera()
+cameraNode.position = SCNVector3(0, 0, 10)
+scene.rootNode.addChildNode(cameraNode)
+sceneView.pointOfView = cameraNode
 
 //pyramid node
 let pyramid = SCNNode()
 pyramid.geometry = SCNPyramid(width: 1, height: 1, length: 1)
-pyramid.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+pyramid.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
 pyramid.geometry?.firstMaterial?.specular.contents = UIColor.white
 scene.rootNode.addChildNode(pyramid)
 
-//box node
-let box = SCNNode()
-box.geometry = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
-box.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-box.position = SCNVector3(0, -0.5, 0)
-//have box a child of pyramid so they move together
-pyramid.addChildNode(box)
 
 let floor = SCNNode()
-floor.position = SCNVector3(0, -5, 0)
 floor.geometry = SCNFloor()
+floor.position = SCNVector3(0, 0, 0)
+floor.geometry?.firstMaterial?.diffuse.contents = UIColor.gray
 floor.geometry?.firstMaterial?.specular.contents = UIColor.white
 scene.rootNode.addChildNode(floor)
 
@@ -44,10 +39,8 @@ scene.rootNode.addChildNode(floor)
 SCNTransaction.begin()
 SCNTransaction.animationDuration = 3.0
 
-pyramid.position = SCNVector3(0, 1, -10)
-pyramid.rotation = SCNVector4(1, 2, 4, -20)
-
-pyramid.eulerAngles = SCNVector3(-45 * CGFloat((Double.pi)/180.0), 45 * CGFloat((Double.pi)/180.0), 0)
+cameraNode.position = SCNVector3(0, 5, 5)
+cameraNode.eulerAngles = SCNVector3(-45 * CGFloat((Double.pi)/180.0), 0, 0)
 
 SCNTransaction.commit()
 
