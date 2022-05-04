@@ -52,7 +52,7 @@ let tube = SCNTube(innerRadius: 0.5, outerRadius: 1, height: 1)
 
 //Node -> change with the node.geometry
 let node = SCNNode()
-node.geometry = text
+node.geometry = torus
 node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
 node.geometry?.firstMaterial?.specular.contents = UIColor.white
 scene.rootNode.addChildNode(node)
